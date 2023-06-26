@@ -8,6 +8,9 @@ dotenv.config();
 connectDB();
 const app = express();
 
+//Middleware
+app.use(express.json());
+
 //Mounting routes
 app.use("/api/v1/movies", movieRouter);
 

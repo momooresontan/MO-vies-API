@@ -35,7 +35,14 @@ exports.addMovie = asyncHandler(async (req, res) => {
 //@public
 
 exports.getMovieById = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Get movie by id" });
+  const id = req.params.id;
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    res.status(404);
+    throw new Error("Movie not found!");
+  }
+
+  res.status(200).json(movie);
 });
 
 //@desc Update one movie
@@ -43,7 +50,18 @@ exports.getMovieById = asyncHandler(async (req, res) => {
 //@private
 
 exports.updateMovie = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Update movie" });
+  const id = req.params.id;
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    res.status(404);
+    throw new Error("Movie not found!");
+  }
+
+  const updatedMovie = await Movie.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+
+  res.status(201).json(updatedMovie);
 });
 
 //@desc Delete one movie
@@ -51,5 +69,13 @@ exports.updateMovie = asyncHandler(async (req, res) => {
 //@private
 
 exports.deleteMovie = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Delete movie" });
+  const id = req.params.id;
+  const movie = await Movie.findById(id);
+  if (!movie) {
+    res.status(404);
+    throw new Error("Movie not found!");
+  }
+  await Movie.findByIdAndRemove(id);
+
+  res.status(200).json({ message: "Movie has been rmoved!" });
 });
