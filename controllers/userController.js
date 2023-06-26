@@ -42,6 +42,10 @@ exports.registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Login user
+//@route POST /api/users/login
+//@public
+
 exports.loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -49,7 +53,6 @@ exports.loginUser = asyncHandler(async (req, res) => {
     throw new Error("All fields are mandatory!");
   }
   const user = await User.findOne({ email });
-  console.log(user);
 
   //compare password with hashedPassword
   const passwordCompare = await bcrypt.compare(password, user.password);
@@ -72,6 +75,11 @@ exports.loginUser = asyncHandler(async (req, res) => {
   }
 });
 
+//@desc Current user
+//@route GET /api/users/me
+//@private
+
 exports.getMe = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "Get current user" });
+  const { user } = req;
+  res.status(200).json(user);
 });
