@@ -13,3 +13,5 @@ router.post("/login", async (req, res) => {
 router.get("/me", async (req, res) => {
   res.status(200).json({ message: "Get current user" });
 });
+
+module.exports = router;
