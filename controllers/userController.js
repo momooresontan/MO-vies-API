@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const User = require("../models/userModel");
 
 dotenv.config();
+
 //@desc Register a user
 //@route POST /api/users/register
 //@public
@@ -48,6 +49,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
     throw new Error("All fields are mandatory!");
   }
   const user = await User.findOne({ email });
+  console.log(user);
 
   //compare password with hashedPassword
   const passwordCompare = await bcrypt.compare(password, user.password);
@@ -63,7 +65,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN }
     );
-    res.statusCode(200).json({ accessToken });
+    res.status(200).json({ accessToken });
   } else {
     res.status(401);
     throw new Error("Email or password invalid");
