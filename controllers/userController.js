@@ -1,7 +1,10 @@
 const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
 
 exports.registerUser = asyncHandler(async (req, res) => {
-  res.status(201).json({ message: "Register user" });
+  const { username, email, password, passwordConfirm } = req.body;
+  if (!username || !email || password || passwordConfirm)
+    res.status(201).json({ message: "Register user" });
 });
 
 exports.loginUser = asyncHandler(async (req, res) => {

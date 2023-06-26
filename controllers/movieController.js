@@ -16,7 +16,7 @@ exports.getAllMovies = asyncHandler(async (req, res) => {
 
 exports.addMovie = asyncHandler(async (req, res) => {
   const { title, released, runtime, year, genre } = req.body;
-  if ((!title, !released, !runtime, !year, !genre)) {
+  if (!title || !released || !runtime || !year || !genre) {
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
