@@ -1,17 +1,16 @@
 const express = require("express");
+const {
+  registerUser,
+  loginUser,
+  getMe,
+} = require("../controllers/userController");
 
 const router = express.Router();
 
-router.post("/register", async (req, res) => {
-  res.status(201).json({ message: "Register user" });
-});
+router.post("/register", registerUser);
 
-router.post("/login", async (req, res) => {
-  res.status(201).json({ message: "Login user" });
-});
+router.post("/login", loginUser);
 
-router.get("/me", async (req, res) => {
-  res.status(200).json({ message: "Get current user" });
-});
+router.get("/me", getMe);
 
 module.exports = router;
