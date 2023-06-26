@@ -21,17 +21,6 @@ const userSchema = new mongoose.Schema(
       minlength: [8, "Password must be at least 8 characters long"],
       select: false,
     },
-    passwordConfirm: {
-      type: String,
-      required: [true, "Please confirm user password"],
-      validate: {
-        // This only works on CREATE or SAVE!!
-        validator: function (val) {
-          return val === this.password;
-        },
-        message: "Passwords do not match!",
-      },
-    },
     roles: {
       type: String,
       default: "user",
