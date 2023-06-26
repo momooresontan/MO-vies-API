@@ -14,30 +14,42 @@ exports.getAllMovies = asyncHandler(async (req, res) => {
 //@route POST /api/v1/movies
 //@private
 
-exports.addMovie = async (req, res) => {
-  res.status(200).json({ message: "Add a movie" });
-};
+exports.addMovie = asyncHandler(async (req, res) => {
+  const { title, released, runtime, year, genre } = req.body;
+  if ((!title, !released, !runtime, !year, !genre)) {
+    res.status(400);
+    throw new Error("All fields are mandatory!");
+  }
+  const movie = await Movie.create({
+    title,
+    released,
+    runtime,
+    year,
+    genre,
+  });
+  res.status(201).json(movie);
+});
 
 //@desc Get one movie
 //@route GET /api/movies/:id
 //@public
 
-exports.getMovieById = async (req, res) => {
+exports.getMovieById = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Get movie by id" });
-};
+});
 
 //@desc Update one movie
 //@route PATCH /api/movies/:id
 //@private
 
-exports.updateMovie = async (req, res) => {
+exports.updateMovie = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Update movie" });
-};
+});
 
 //@desc Delete one movie
 //@route DELETE /api/movies/:id
 //@private
 
-exports.deleteMovie = async (req, res) => {
+exports.deleteMovie = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "Delete movie" });
-};
+});
