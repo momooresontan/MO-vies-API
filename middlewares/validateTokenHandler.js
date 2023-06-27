@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
 
-const validateToken = asyncHandler(async (req, res, next) => {
+exports.validateToken = asyncHandler(async (req, res, next) => {
   let token;
   let authHeader = req.headers.Authorization || req.headers.authorization;
   if (authHeader && authHeader.startsWith("Bearer")) {
@@ -21,4 +21,12 @@ const validateToken = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = validateToken;
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      res.status(403);
+      throw new Error("You do not have permission to perform this action");
+    }
+    next();
+  };
+};
