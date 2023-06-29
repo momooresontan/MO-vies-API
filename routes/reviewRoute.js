@@ -8,6 +8,8 @@ const {
   createReview,
   getAllReviews,
   getReviewById,
+  updateReview,
+  deleteReview,
 } = require("../controllers/reviewController");
 
 const router = express.Router({ mergeParams: true });
@@ -19,11 +21,7 @@ router.use(validateToken);
 router.get("/", getAllReviews);
 router.post("/", setMovieUserIds, createReview);
 router.get("/:id", getReviewById);
-router.patch("/:id", (req, res) => {
-  res.status(200).json({ message: "Update review by id" });
-});
-router.delete("/:id", (req, res) => {
-  res.status(200).json({ message: "Delete review by id" });
-});
+router.patch("/:id", updateReview);
+router.delete("/:id", deleteReview);
 
 module.exports = router;

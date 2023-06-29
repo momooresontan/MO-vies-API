@@ -44,3 +44,29 @@ exports.getReviewById = asyncHandler(async (req, res) => {
 
   res.status(200).json(review);
 });
+
+exports.updateReview = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const updatedReview = await Review.findByIdAndUpdate(id, req.body, {
+    new: true,
+  });
+  if (!updatedReview) {
+    res.status(404);
+    throw new Error("Review not found!");
+  }
+
+  res.status(200).json(updatedReview);
+});
+
+exports.deleteReview = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const review = await Review.findById(id);
+  if (!review) {
+    res.status(404);
+    throw new Error("Review not found!");
+  }
+
+  await Review.findByIdAndDelete(id);
+
+  res.status(204).json({ message: "Delete review by id" });
+});
