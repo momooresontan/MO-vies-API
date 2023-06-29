@@ -7,6 +7,7 @@ const {
   setMovieUserIds,
   createReview,
   getAllReviews,
+  getReviewById,
 } = require("../controllers/reviewController");
 
 const router = express.Router({ mergeParams: true });
@@ -17,9 +18,7 @@ router.use(validateToken);
 
 router.get("/", getAllReviews);
 router.post("/", setMovieUserIds, createReview);
-router.get("/:id", (req, res) => {
-  res.status(200).json({ message: "Get review by id" });
-});
+router.get("/:id", getReviewById);
 router.patch("/:id", (req, res) => {
   res.status(200).json({ message: "Update review by id" });
 });

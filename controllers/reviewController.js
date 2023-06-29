@@ -1,5 +1,4 @@
 const asyncHandler = require("express-async-handler");
-const Movie = require("../models/movieModel");
 const Review = require("../models/reviewModel");
 
 exports.setMovieUserIds = (req, res, next) => {
@@ -32,4 +31,16 @@ exports.getAllReviews = asyncHandler(async (req, res) => {
   const reviews = await Review.find(filter);
 
   res.status(200).json(reviews);
+});
+
+exports.getReviewById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  const review = await Review.findById(id);
+
+  if (!review) {
+    res.status(404);
+    throw new Error("Review not found!");
+  }
+
+  res.status(200).json(review);
 });
