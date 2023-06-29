@@ -19,7 +19,7 @@ router.use(validateToken);
 //POST /movie/12344ub4u/reviews
 
 router.get("/", getAllReviews);
-router.post("/", setMovieUserIds, createReview);
+router.post("/", restrictTo("user"), setMovieUserIds, createReview);
 router.get("/:id", getReviewById);
 router.patch("/:id", updateReview);
 router.delete("/:id", deleteReview);
