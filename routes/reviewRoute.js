@@ -1,5 +1,8 @@
 const express = require("express");
-const { validateToken } = require("../middlewares/validateTokenHandler");
+const {
+  validateToken,
+  restrictTo,
+} = require("../middlewares/validateTokenHandler");
 const {
   setMovieUserIds,
   createReview,
@@ -14,7 +17,7 @@ router.use(validateToken);
 router.get("/", (req, res) => {
   res.status(200).json({ message: "Get all reviews" });
 });
-router.post("/");
+router.post("/", restrictTo("user"), setMovieUserIds, createReview);
 router.get("/:id", (req, res) => {
   res.status(200).json({ message: "Get review by id" });
 });
