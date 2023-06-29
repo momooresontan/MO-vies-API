@@ -9,20 +9,17 @@ exports.setMovieUserIds = (req, res, next) => {
   next();
 };
 
-exports.createMovieReview = asyncHandler(async (req, res) => {
-  const { rating, comment, movieId } = req.body;
-
-  const review = {
-    user: req.user._id,
-    name: req.user.name,
-    rating: Number(rating),
+exports.createReview = asyncHandler(async (req, res) => {
+  const { comment, rating, user, movie } = req.body;
+  if (!comment || !rating || !user || !movie) {
+    res.status(400);
+    throw new Error("All fields are mandatory!");
+  }
+  const review = await Review.create({
     comment,
-  };
-
-  const movie = await Movie.findById(movieId);
-  const isReviewed = await Review.find(
-    (r) => r.user.toString() === req.user._id.toString()
-  );
-
-  res.status(200).json({ message: "Create a review" });
+    rating,
+    user,
+    movie,
+  });
+  res.status(201).json(review);
 });

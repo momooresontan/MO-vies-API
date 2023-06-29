@@ -1,9 +1,15 @@
 const express = require("express");
 const { validateToken } = require("../middlewares/validateTokenHandler");
+const {
+  setMovieUserIds,
+  createReview,
+} = require("../controllers/reviewController");
 
 const router = express.Router({ mergeParams: true });
 
 router.use(validateToken);
+
+//POST /movie/12344ub4u/reviews
 
 router.get("/", (req, res) => {
   res.status(200).json({ message: "Get all reviews" });
