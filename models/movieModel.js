@@ -24,9 +24,20 @@ const movieSchema = new mongoose.Schema(
     },
   },
   {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  },
+  {
     timestamps: true,
   }
 );
+
+//Virtual Populate
+movieSchema.virtual("reviews", {
+  ref: "Review",
+  foreignField: "movie",
+  localField: "_id",
+});
 
 const Movie = mongoose.model("Movie", movieSchema);
 
