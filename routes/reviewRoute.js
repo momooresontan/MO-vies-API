@@ -5,9 +5,7 @@ const router = express.Router();
 router.get("/", (req, res) => {
   res.status(200).json({ message: "Get all reviews" });
 });
-router.post("/", (req, res) => {
-  res.status(200).json({ message: "Create a review" });
-});
+router.post("/");
 router.get("/:id", (req, res) => {
   res.status(200).json({ message: "Get review by id" });
 });
