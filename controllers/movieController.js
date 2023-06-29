@@ -36,7 +36,7 @@ exports.addMovie = asyncHandler(async (req, res) => {
 
 exports.getMovieById = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  const movie = await Movie.findById(id);
+  const movie = await Movie.findById(id).populate("reviews");
   if (!movie) {
     res.status(404);
     throw new Error("Movie not found!");
