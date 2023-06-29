@@ -11,7 +11,7 @@ dotenv.config();
 //@public
 
 exports.registerUser = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
   if (!username || !email || !password) {
     res.status(400);
     throw new Error("All fields are mandatory");
@@ -29,6 +29,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
     username,
     email,
     password: hashedPassword,
+    role,
   });
   console.log(`User created ${user}`);
   if (user) {
@@ -62,6 +63,7 @@ exports.loginUser = asyncHandler(async (req, res) => {
         user: {
           username: user.username,
           email: user.email,
+          role: user.role,
           id: user.id,
         },
       },

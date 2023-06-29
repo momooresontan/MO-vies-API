@@ -18,10 +18,10 @@ router.use(validateToken);
 
 //POST /movie/12344ub4u/reviews
 
-router.get("/", getAllReviews);
+router.get("/", restrictTo("admin"), getAllReviews);
 router.post("/", restrictTo("user"), setMovieUserIds, createReview);
-router.get("/:id", getReviewById);
-router.patch("/:id", updateReview);
-router.delete("/:id", deleteReview);
+router.get("/:id", restrictTo("admin"), getReviewById);
+router.patch("/:id", restrictTo("user"), updateReview);
+router.delete("/:id", restrictTo("user", "admin"), deleteReview);
 
 module.exports = router;

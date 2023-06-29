@@ -21,16 +21,17 @@ exports.validateToken = asyncHandler(async (req, res, next) => {
   }
 });
 
-exports.restrictTo = (role) => {
+exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    // if (!roles.includes(req.user.roles)) {
-    //   res.status(403);
-    //   throw new Error("You do not have permission to perform this action");
-    // }
-    if (role != req.user.roles) {
+    console.log(req.user);
+    if (!roles.includes(req.user.role)) {
       res.status(403);
       throw new Error("You do not have permission to perform this action");
     }
+    // if (role !== req.user.roles) {
+    //   res.status(403);
+    //   throw new Error("You do not have permission to perform this action");
+    // }
 
     next();
   };

@@ -11,7 +11,7 @@ const {
 const router = express.Router();
 
 router.get("/", getAllMovies);
-router.post("/", addMovie);
+router.post("/", restrictTo("admin"), addMovie);
 router.get("/:id", getMovieById);
 router.patch("/:id", restrictTo("admin"), updateMovie);
 router.delete("/:id", restrictTo("admin"), deleteMovie);
