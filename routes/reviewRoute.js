@@ -1,6 +1,9 @@
 const express = require("express");
+const { validateToken } = require("../middlewares/validateTokenHandler");
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
+
+router.use(validateToken);
 
 router.get("/", (req, res) => {
   res.status(200).json({ message: "Get all reviews" });
