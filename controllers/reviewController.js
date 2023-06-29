@@ -23,3 +23,13 @@ exports.createReview = asyncHandler(async (req, res) => {
   });
   res.status(201).json(review);
 });
+
+exports.getAllReviews = asyncHandler(async (req, res) => {
+  //To allow for NESTED GET REVIEWS on movie (hack)
+  let filter = {};
+  if (req.params.movieId) filter = { movie: req.params.movieId };
+
+  const reviews = await Review.find(filter);
+
+  res.status(200).json(reviews);
+});
